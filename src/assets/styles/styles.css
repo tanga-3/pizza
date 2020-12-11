@@ -67,14 +67,14 @@ button.outlined {
   cursor: default;
  }
  .list{
-   background: url(./assets/images/icons/list.png) no-repeat 30px;    
+   background: url(../../assets/images/icons/list.png) no-repeat 30px;    
  }
  
  .add{
-   background: url(./assets/images/icons/add.png) no-repeat 30px;    
+   background: url(../../assets/images/icons/add.png) no-repeat 30px;    
  }
  .log-out{
-   background: url(./assets/images/icons/userWhite.png) no-repeat 30px;    
+   background: url(../../assets/images/icons/userWhite.png) no-repeat 30px;    
  }
 .logo {
 margin: 30px auto;

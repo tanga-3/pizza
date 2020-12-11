@@ -1,0 +1,100 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #2a2d40;
+  color: #fff;
+}
+.homeImage {
+  flex: 2;
+  align-items: stretch;
+}
+.rightPanel {
+  flex: 4;
+  align-items: stretch;
+}
+.rightPanelInnerContainer {
+  padding: 20px 50px;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  display: flex;
+  height: 100%;
+}
+h1 {
+  font-size: 40px;
+}
+input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #70727e;
+  color: #fff;
+  margin-bottom: 20px;
+  padding-left:30px;
+}
+input:focus {
+  outline: none;
+}
+input.login{
+background: url(./assets/images/icons/user.png) no-repeat scroll 7px 7px;    
+}
+input.password{
+background: url(./assets/images/icons/lock.png) no-repeat scroll 7px 7px;    
+}
+.buttonsWrapper {
+  display: flex;
+  width: 100%;
+  margin-top: 30px;
+}
+button.login {
+  margin-right: 20px;
+}
+
+.homeImage {
+  background-image: url(./assets/images/home.jpg);
+  background-size: cover;
+  background-position-x: center;
+}
+h2.try{
+  display: none;
+  font-size: 24px;
+  line-height: 1.8;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+@media screen and (min-width: 600px) {
+  .rightPanelInnerContainer {
+    padding: 50px 100px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .container {
+    flex-direction: row;
+  }
+  .rightPanelInnerContainer {
+    padding: 50px 150px;
+  }
+  .homeImage {
+    flex: 1;
+  }
+  .rightPanel {
+    flex: 2;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .rightPanelInnerContainer {
+    padding: 50px 150px;
+  }
+  .homeImage {
+    flex: 1;
+  }
+  .rightPanel {
+    flex: 1;
+  }
+}
