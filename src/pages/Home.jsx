@@ -1,51 +1,61 @@
-import React from 'react';
- import './../home.css';
+import React, {useState} from "react";
+import "./../home.css";
+import { useHistory } from "react-router-dom";
 
-
+const creds = { login: "admin", password: "password" };
 
 const Home = () => {
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  
+  const history = useHistory();
 
-const form = document.querySelector('#login-form');
-const title = document.querySelector('#login-title');
-const tryAgain = document.querySelector('#try-again');
-const creds = {login: 'admin', password: "password"};
-const removeTitle = () => title.parentElement.removeChild(title);
-const showTryAgain = () => tryAgain.style.display = 'block';
+  const submitHandler = (event) => {
+    event.preventDefault();
+    if (login === creds.login && password === creds.password) {
+      history.push("/products");
+      localStorage.setItem("user", JSON.stringify({ login: login }));
+    } else {
+      setError(true);
+    }
+  };
 
-if (form) {
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const login = event.target.elements.login.value;
-        const password = event.target.elements.password.value;
-
-     if (login === creds.login && password === creds.password) {
-      window.location.href  = "products-page.html";
-      localStorage.setItem("user", JSON.stringify({login: login}))
-   } else
-   { 
-     removeTitle();
-     showTryAgain();
-   }
-    })
-}
   return (
-    <div class="container">
-    <div class="homeImage"></div>
-    <div class="rightPanel">
-     <div class="rightPanelInnerContainer">
-      <form id ="login-form">
-        <h1 id="login-title">Login</h1>
-        <h2 id="try-again" class="try">The email or password is incorrect, <br/> try again, please</h2>
-        <input type="text" class="login" name="login" placeholder="Username"/>
-        <input type="password" class="password" name="password" placeholder="Password"/>
-        <button type="submit" class="contained login">LOGIN</button>
-      </form>
+    <div className="container">
+      <div className="homeImage"></div>
+      <div className="rightPanel">
+        <div className="rightPanelInnerContainer">
+          <form id="login-form">
+            {error ? (
+              <h2 id="try-again" className="try">
+                The email or password is incorrect, <br /> try again, please
+              </h2>
+            ) : (
+              <h1 id="login-title">Login</h1>
+            )}
+            <input
+              type="text"
+              className="login"
+              name="login"
+              placeholder="Username"
+              onInput = {(event) => setLogin(event.target.value)}
+            />
+            <input
+              type="password"
+              className="password"
+              name="password"
+              placeholder="Password"
+              onInput = {(event) => setPassword(event.target.value)}
+            />
+            <button onClick={submitHandler} type="submit" className="contained login">
+              LOGIN
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
-  </div>
-  </div>
   );
-}
+};
 
 export default Home;
-
-
