@@ -1,29 +1,33 @@
-import React from "react";
+import React, {useState} from "react";
 import Navbar from "./../components/Navbar";
+import {connect} from 'react-redux';
+import {  ADD_POST  } 
+  from "../store/actions/posts";
 
 
-const CreateProduct = () => {
+const CreateProduct = (props) => {
+const [title, setTitle] = useState('');
+const[body, setBody] = useState('');
+const submitHandler = (event) => {
+  event.preventDefault();
+  props.addPost({title, body, id: 1000})
+}
+
   return (
     <div className="container">
      <Navbar />
       <div className="content">
         <div className="inner-content create-wrapper">
           <h2>Create a new pizza</h2>
-          <form className="create-form">
+          <form onSubmit={submitHandler} className="create-form">
             <div className="flex-row">
               <label>Pizza name</label>
-              <input type="text" name="name" />
+              <input type="text" name="name"
+              onInput={(ev) => setTitle(ev.target.value)}/>
             </div>
             <div className="flex-row">
               <label>Pizza description</label>
-              <textarea name="description"></textarea>
-            </div>
-            <div className="flex-row">
-              <label>Diameter</label>
-              <select name="diameter">
-                <option>25 cm</option>
-                <option>35 cm</option>
-              </select>
+              <textarea  onInput={(ev) => setBody(ev.target.value)} name="description"></textarea>
             </div>
             <div className="flex-row">
               <label>Price in UAH</label>
@@ -44,4 +48,9 @@ const CreateProduct = () => {
     </div>
   );
 };
-export default CreateProduct;
+export default connect(
+  () => ({}),
+  (dispach) => ({
+    addPost: (payload) => dispatchEvent({type: ADD_POST, payload})
+  })
+) (CreateProduct);

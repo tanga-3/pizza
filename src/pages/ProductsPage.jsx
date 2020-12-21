@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./../components/Navbar";
 import Product from  "./../components/Product";
+import {connect} from 'react-redux';
+import { FETCH_POSTS_ERROR, FETCH_POSTS_COMPLETED, FETCH_POSTS_START } from "../store/actions/posts";
 
-const ProductsPage = () => {
-  
+
+const ProductsPage = (props) => {
+ useEffect(() => {
+   props.fetchStart();
+   fetch('https://jungle-courses-api.herokuapp.com/api/ng/products')
+   .then(response => response.json())
+   .then(data => {
+    props.fetchComplete(data);
+   })
+   .catch(error => props.fetchError(error));
+   return () => {}
+   
+ }, [])
+
+
   return (
     <div className="container">
      <Navbar />
@@ -18,11 +33,23 @@ const ProductsPage = () => {
           </ul>
         </div> 
         <div id="product-list">
-
-          <Product />
+          {props.posts.data.map(post => {
+        return  <Product title={post.title} photo={post.pictureUrls[0]} price={post.price}/>   
+            })}
+                  
         </div>
     </div>
     </div>
     )};
-    export default ProductsPage;
+
+    export default connect(
+      (state) => ({
+        posts: state.posts
+      }),
+      (dispatch) => ({
+        fetchStart: () => dispatch({type: FETCH_POSTS_START}),
+        fetchComplete: (payload) => dispatch({type: FETCH_POSTS_COMPLETED}),
+        fetchError: (payload) => dispatch({type: FETCH_POSTS_ERROR, payload}),
+      })
+    )(ProductsPage);
 
