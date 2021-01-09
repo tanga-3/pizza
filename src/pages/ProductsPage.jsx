@@ -1,27 +1,31 @@
 import React, { useEffect } from "react";
 import Navbar from "./../components/Navbar";
-import Product from  "./../components/Product";
-import {connect} from 'react-redux';
-import { FETCH_POSTS_ERROR, FETCH_POSTS_COMPLETED, FETCH_POSTS_START } from "../store/actions/posts";
-
+import Product from "./../components/Product";
+import { connect } from "react-redux";
+import {
+  FETCH_POSTS_ERROR,
+  FETCH_POSTS_COMPLETED,
+  FETCH_POSTS_START,
+} from "../store/actions/posts";
+import { useAuthorization } from "../hooks/useAuthorization";
 
 const ProductsPage = (props) => {
- useEffect(() => {
-   props.fetchStart();
-   fetch('https://jungle-courses-api.herokuapp.com/api/ng/products')
-   .then(response => response.json())
-   .then(data => {
-    props.fetchComplete(data);
-   })
-   .catch(error => props.fetchError(error));
-   return () => {}
-   
- }, [])
+  useAuthorization(false);
 
+  useEffect(() => {
+    props.fetchStart();
+    fetch("https://jungle-courses-api.herokuapp.com/api/ng/products")
+      .then((response) => response.json())
+      .then((data) => {
+        props.fetchComplete(data);
+      })
+      .catch((error) => props.fetchError(error));
+    return () => {};
+  }, []);
 
   return (
     <div className="container">
-     <Navbar />
+      <Navbar />
       <div className="content">
         <div className="inner-content">
           <ul className="products-list-head">
@@ -31,23 +35,31 @@ const ProductsPage = (props) => {
             <li>Price</li>
             <li>Actions</li>
           </ul>
-        </div> 
-          {props.posts.data.map(post => {
-        return  <Product key={post._id} title={post.title} photo={post.pictureUrls[0]} price={post.price} id={post._id}/>   
-            })}
-                
+        </div>
+        {props.posts.data.map((post) => {
+          return (
+            <Product
+              key={post._id}
+              title={post.title}
+              photo={post.pictureUrls[0]}
+              price={post.price}
+              id={post._id}
+            />
+          );
+        })}
+      </div>
     </div>
-     </div>
-    )};
+  );
+};
 
-    export default connect(
-      (state) => ({
-        posts: state.posts
-      }),
-      (dispatch) => ({
-        fetchStart: () => dispatch({type: FETCH_POSTS_START}),
-        fetchComplete: (payload) => dispatch({type: FETCH_POSTS_COMPLETED, payload}),
-        fetchError: (payload) => dispatch({type: FETCH_POSTS_ERROR, payload}),
-      })
-    )(ProductsPage);
-
+export default connect(
+  (state) => ({
+    posts: state.posts,
+  }),
+  (dispatch) => ({
+    fetchStart: () => dispatch({ type: FETCH_POSTS_START }),
+    fetchComplete: (payload) =>
+      dispatch({ type: FETCH_POSTS_COMPLETED, payload }),
+    fetchError: (payload) => dispatch({ type: FETCH_POSTS_ERROR, payload }),
+  })
+)(ProductsPage);
