@@ -48,14 +48,12 @@ export const reducer = (state = initialState, action) => {
         }
       }
     case ADD_POST: {
-      console.log(action.payload, state.data);
       return {
         ...state,
         data: [action.payload, ...state.data],
       }
     }
     case REMOVE_POST: {
-      console.log(action.payload, state.data);
       return {
         ...state,
         data: state.data.filter((p) => p._id !== action.payload),

@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./../home.css";
 import { useHistory } from "react-router-dom";
+import { useAuthorization } from "../hooks/useAuthorization";
 
 const creds = { login: "admin", password: "password" };
 
@@ -8,9 +9,8 @@ const Home = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
-  
+  useAuthorization(true, false);
   const history = useHistory();
-
   const submitHandler = (event) => {
     event.preventDefault();
     if (login === creds.login && password === creds.password) {
@@ -39,16 +39,20 @@ const Home = () => {
               className="login"
               name="login"
               placeholder="Username"
-              onInput = {(event) => setLogin(event.target.value)}
+              onInput={(event) => setLogin(event.target.value)}
             />
             <input
               type="password"
               className="password"
               name="password"
               placeholder="Password"
-              onInput = {(event) => setPassword(event.target.value)}
+              onInput={(event) => setPassword(event.target.value)}
             />
-            <button onClick={submitHandler} type="submit" className="contained login">
+            <button
+              onClick={submitHandler}
+              type="submit"
+              className="contained login"
+            >
               LOGIN
             </button>
           </form>
