@@ -31,33 +31,35 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
-      };
+      }
     }
     case FETCH_POSTS_COMPLETED: {
         return {
           ...state,
          data: action.payload,
          isLoading: false
-        };
+        }
       }
       case FETCH_POSTS_ERROR: {
         return {
           ...state,
          disLoading: false,
          error: action.payload
-        };
+        }
       }
     case ADD_POST: {
+      console.log(action.payload, state.data);
       return {
         ...state,
         data: [action.payload, ...state.data],
-      };
+      }
     }
     case REMOVE_POST: {
+      console.log(action.payload, state.data);
       return {
         ...state,
-        data: state.data.filter((p) => p.id !== action.payload),
-      };
+        data: state.data.filter((p) => p._id !== action.payload),
+      }
     }
     default: {
       return state;

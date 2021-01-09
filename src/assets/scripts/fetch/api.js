@@ -43,7 +43,7 @@ const productsApi = {
   
   
   
-  productsApi.deleteProduct("5fb8ef029a657533c0a8b0fe");
+  productsApi.deleteProduct("5fe3779b5246c2001718b44d");
   
   productsApi.getProducts().then(results => {
     productsApi.deleteProduct(results[0]._id)

@@ -27,19 +27,17 @@ const ProductsPage = (props) => {
           <ul className="products-list-head">
             <li>Photo</li>
             <li>Product Name</li>
-            <li>Product ID</li>
+            <li>Pizza diameter</li>
             <li>Price</li>
             <li>Actions</li>
           </ul>
         </div> 
-        <div id="product-list">
           {props.posts.data.map(post => {
-        return  <Product title={post.title} photo={post.pictureUrls[0]} price={post.price}/>   
+        return  <Product key={post._id} title={post.title} photo={post.pictureUrls[0]} price={post.price} id={post._id}/>   
             })}
-                  
-        </div>
+                
     </div>
-    </div>
+     </div>
     )};
 
     export default connect(
@@ -48,7 +46,7 @@ const ProductsPage = (props) => {
       }),
       (dispatch) => ({
         fetchStart: () => dispatch({type: FETCH_POSTS_START}),
-        fetchComplete: (payload) => dispatch({type: FETCH_POSTS_COMPLETED}),
+        fetchComplete: (payload) => dispatch({type: FETCH_POSTS_COMPLETED, payload}),
         fetchError: (payload) => dispatch({type: FETCH_POSTS_ERROR, payload}),
       })
     )(ProductsPage);
